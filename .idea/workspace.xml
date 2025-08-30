@@ -5,23 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8f0ca28d-9092-4413-b22b-4bde608adc32" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.eslintrc.cjs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.prettierignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/chat/actions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/chat/chat-client.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/chat/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/usecases/chat/ask.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/usecases/chat/history.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/ports/llm.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/ports/message_store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/di/container.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/llm/fake-llm.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/bubble.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/empty-state.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/typing.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(features)/docs/actions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(features)/docs/docs-client.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(features)/docs/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/services/prefixed_llm.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/usecases/delete_document.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/usecases/list_documents.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/usecases/prepare_context.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/usecases/upload_documents.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/models/document.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/models/study_context.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/ports/context_store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/ports/document_store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/ports/file_storage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/ports/text_extractor.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/extractor/basic_text_extractor.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_context_store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_document_store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_file_storage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(features)/chat/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/chat/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(features)/chat/chat-client.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/chat/chat-client.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(features)/chat/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/chat/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/usecases/chat/ask.ts" beforeDir="false" afterPath="$PROJECT_DIR$/application/usecases/chat/ask.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/ports/llm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/domain/ports/llm.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/di/container.ts" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/di/container.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
@@ -31,6 +46,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
@@ -41,25 +61,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/vladyslav/Downloads/LEARNING/learning-buddy&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Users/vladyslav/Downloads/LEARNING/learning-buddy/node_modules/typescript/lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "pdf-context",
+    "last_opened_file_path": "/Users/vladyslav/Downloads/LEARNING/learning-buddy",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "/Users/vladyslav/Downloads/LEARNING/learning-buddy/node_modules/typescript/lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/domain/models" />
+      <recent name="$PROJECT_DIR$/app/(features)" />
       <recent name="$PROJECT_DIR$/application" />
       <recent name="$PROJECT_DIR$/application/usecases/chat" />
     </key>
