@@ -1,27 +1,31 @@
 import { LLMProvider } from "@/domain/ports/llm";
-import { MessageStore } from "@/domain/ports/message_store";
+import { MessageStore, Message } from "@/domain/ports/message_store";
 import crypto from "crypto";
 
-enum RolesType {
-  USER = "user",
-  ASSISTANT = "assistant",
-}
-export async function ask(deps: { llm: LLMProvider; store: MessageStore }, userText: string) {
-  const now = Date.now();
-  await deps.store.add({
+export async function ask(deps: { llm: LLMProvider; messageStore: MessageStore }, text: string) {
+  // 1) додаємо нове user повідомлення
+  const userMsg: Message = {
     id: crypto.randomUUID(),
-    role: RolesType.USER,
-    content: userText,
-    createdAt: now,
-  });
+    role: "user",
+    content: text,
+    createdAt: Date.now(),
+  };
+  await deps.messageStore.add(userMsg);
 
-  const answer = await deps.llm.reply(userText);
+  const history = await deps.messageStore.list();
 
-  await deps.store.add({
+  const prompt = history.map((m) => `${m.role.toUpperCase()}: ${m.content}`).join("\n\n");
+
+  const answer = await deps.llm.reply(prompt);
+
+  const assistantMsg: Message = {
     id: crypto.randomUUID(),
-    role: RolesType.ASSISTANT,
+    role: "assistant",
     content: answer,
     createdAt: Date.now(),
-  });
-  return { answer };
+  };
+
+  await deps.messageStore.add(assistantMsg);
+
+  return assistantMsg;
 }
