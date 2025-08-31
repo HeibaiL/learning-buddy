@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { deleteDocAction, listDocsAction, prepareContextAction, uploadAction } from "./actions";
+import {
+  deleteDocAction,
+  listDocsAction,
+  prepareContextAction,
+  uploadAction,
+} from "./actions";
 import { useRouter } from "next/navigation";
 
 type DocItem = { id: string; name: string; type: "pdf" | "txt"; size: number; createdAt: number };
@@ -117,26 +122,28 @@ export default function DocsClient() {
           )}
         </ul>
 
-        <button
-          type="button"
-          disabled={preparing}
-          onClick={async () => {
-            try {
-              setPreparing(true);
-              const r = await prepareContextAction("Study Pack");
-              // опційно: toast/alert
-              // alert(`Context prepared: ${r.title}`);
-              router.push("/chat"); // ⬅️ одразу йдемо в чат
-            } catch (e: any) {
-              alert(e?.message ?? "Failed to prepare context");
-            } finally {
-              setPreparing(false);
-            }
-          }}
-          className="rounded-xl bg-emerald-600 px-4 py-2.5 font-medium text-white hover:bg-emerald-500 disabled:opacity-50"
-        >
-          {preparing ? "Preparing…" : "Prepare for Chat →"}
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            disabled={preparing}
+            onClick={async () => {
+              try {
+                setPreparing(true);
+                await prepareContextAction();
+                // опційно: toast/alert
+                // alert(`Context prepared: ${r.title}`);
+                router.push("/chat"); // ⬅️ одразу йдемо в чат
+              } catch (e: any) {
+                alert(e?.message ?? "Failed to prepare context");
+              } finally {
+                setPreparing(false);
+              }
+            }}
+            className="rounded-xl bg-emerald-600 px-4 py-2.5 font-medium text-white hover:bg-emerald-500 disabled:opacity-50"
+          >
+            {preparing ? "Preparing…" : "Prepare for Chat →"}
+          </button>
+        </div>
       </div>
     </section>
   );

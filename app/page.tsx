@@ -9,14 +9,6 @@ export default function Home() {
           A simple clean-architecture demo with Next.js + OpenAI. Chat with your personal AI study
           assistant.
         </p>
-
-        <Link
-          href="/chat"
-          className="rounded-xl bg-emerald-600 px-6 py-3 text-lg font-medium text-white shadow-lg transition hover:bg-emerald-500 focus:ring-2 focus:ring-emerald-400"
-        >
-          🚀 Go to Chat
-        </Link>
-
         <Link
           href="/docs"
           className="rounded-xl bg-emerald-600 px-6 py-3 text-lg font-medium text-white shadow-lg transition hover:bg-emerald-500 focus:ring-2 focus:ring-emerald-400"

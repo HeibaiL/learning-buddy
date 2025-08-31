@@ -56,7 +56,6 @@ module.exports = {
     {
       files: ["app/**/actions.ts", "app/**/route.ts"],
       rules: {
-        // серверні файли — дозволяємо console.log при бажанні
         "no-console": "off",
       },
     },

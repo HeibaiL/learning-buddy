@@ -6,5 +6,5 @@ export interface Document {
   type: DocType;
   size: number;
   createdAt: number;
-  text: string; // нормалізований текст витягнутий з файлу
+  text: string;
 }
