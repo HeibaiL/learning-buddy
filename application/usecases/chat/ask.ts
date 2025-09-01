@@ -3,7 +3,6 @@ import { MessageStore, Message } from "@/domain/ports/message_store";
 import crypto from "crypto";
 
 export async function ask(deps: { llm: LLMProvider; messageStore: MessageStore }, text: string) {
-  // 1) додаємо нове user повідомлення
   const userMsg: Message = {
     id: crypto.randomUUID(),
     role: "user",

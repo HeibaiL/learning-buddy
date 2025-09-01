@@ -8,7 +8,7 @@ import { deleteDocument } from "@/application/usecases/delete_document";
 import { uploadDocument } from "@/application/usecases/upload_documents";
 import { prepareStudyContext } from "@/application/usecases/prepare_context";
 
-const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_SIZE = 25 * 1024 * 1024; // 25mb
 const ALLOWED = new Set(["application/pdf", "text/plain"]);
 
 export async function uploadAction(formData: FormData) {
@@ -43,12 +43,23 @@ export async function deleteDocAction(id: string) {
   return { ok: true };
 }
 
-export async function prepareContextAction(title?: string) {
+export async function prepareContextAction() {
   const c = getContainer();
-  console.log(c.contextStore);
-  const res = await prepareStudyContext(
-    { docs: c.documentStore, ctx: c.contextStore, llm: c.llm },
-    { title },
-  );
+
+  const res = await prepareStudyContext({
+    docs: c.documentStore,
+    embed: c.embed,
+    vectors: c.vectors,
+  });
+
   return res;
+}
+
+export async function buildIndexAction() {
+  const c = getContainer();
+  return prepareStudyContext({ docs: c.documentStore, embed: c.embed, vectors: c.vectors });
+}
+export async function indexSizeAction() {
+  const c = getContainer();
+  return c.vectors.size();
 }

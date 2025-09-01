@@ -11,7 +11,6 @@ export class InMemoryFileStorage implements FileStorage {
     this.files.delete(path);
   }
 
-  // додатково можна зробити get(path) для дебагу
   get(path: string) {
     return this.files.get(path);
   }

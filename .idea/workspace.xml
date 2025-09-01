@@ -4,41 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f0ca28d-9092-4413-b22b-4bde608adc32" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/bubble.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/empty-state.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/chat/components/typing.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/docs/actions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/docs/docs-client.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(features)/docs/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/services/prefixed_llm.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/usecases/delete_document.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/usecases/list_documents.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/usecases/prepare_context.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/application/usecases/upload_documents.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/models/document.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/models/study_context.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/ports/context_store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/ports/document_store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/ports/file_storage.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/ports/text_extractor.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/extractor/basic_text_extractor.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_context_store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_document_store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_file_storage.ts" afterDir="false" />
+    <list default="true" id="8f0ca28d-9092-4413-b22b-4bde608adc32" name="Changes" comment="Added pdf CRUD, added history for the chat to keep previous context always">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/services/chunker.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/services/prompt_builder.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/usecases/ask_with_retrieval.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/application/usecases/chat/clear-history.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/ports/embeddings.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/ports/vector_store.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/embeddings/openAi_embeddings.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/infrastructure/store/memory_vector_store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.cjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(features)/chat/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/chat/actions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(features)/chat/chat-client.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/chat/chat-client.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(features)/chat/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/chat/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(features)/docs/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/docs/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(features)/docs/docs-client.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(features)/docs/docs-client.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/services/prefixed_llm.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/application/usecases/chat/ask.ts" beforeDir="false" afterPath="$PROJECT_DIR$/application/usecases/chat/ask.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/domain/ports/llm.ts" beforeDir="false" afterPath="$PROJECT_DIR$/domain/ports/llm.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/usecases/delete_document.ts" beforeDir="false" afterPath="$PROJECT_DIR$/application/usecases/delete_document.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/usecases/prepare_context.ts" beforeDir="false" afterPath="$PROJECT_DIR$/application/usecases/prepare_context.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/models/document.ts" beforeDir="false" afterPath="$PROJECT_DIR$/domain/models/document.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/ports/message_store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/domain/ports/message_store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/infrastructure/di/container.ts" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/di/container.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infrastructure/store/memory_file_storage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/store/memory_file_storage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,11 +39,23 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="pdf-context" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;HeibaiL&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/HeibaiL/learning-buddy.git&quot;,
+    &quot;accountId&quot;: &quot;388aaa6e-4a20-4ae6-882d-2ae059553f2b&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -67,7 +70,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "pdf-context",
+    "git-widget-placeholder": "pdf__embedding",
     "last_opened_file_path": "/Users/vladyslav/Downloads/LEARNING/learning-buddy",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -80,6 +83,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/application/usecases" />
       <recent name="$PROJECT_DIR$/domain/models" />
       <recent name="$PROJECT_DIR$/app/(features)" />
       <recent name="$PROJECT_DIR$/application" />
@@ -103,10 +107,35 @@
       <workItem from="1756474964753" duration="236000" />
       <workItem from="1756475234622" duration="10663000" />
       <workItem from="1756544894504" duration="1774000" />
+      <workItem from="1756652358095" duration="4071000" />
     </task>
+    <task id="LOCAL-00001" summary="Added pdf CRUD, added history for the chat to keep previous context always">
+      <option name="closed" value="true" />
+      <created>1756562173530</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1756562173530</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added pdf CRUD, added history for the chat to keep previous context always" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added pdf CRUD, added history for the chat to keep previous context always" />
   </component>
 </project>

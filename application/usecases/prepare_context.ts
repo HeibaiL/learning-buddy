@@ -1,68 +1,98 @@
+import pLimit from "p-limit"; // npm i p-limit
 import { DocumentStore } from "@/domain/ports/document_store";
-import { ContextStore } from "@/domain/ports/context_store";
-import { LLMProvider } from "@/domain/ports/llm";
-import crypto from "crypto";
+import { EmbeddingsProvider } from "@/domain/ports/embeddings";
+import { VectorStore } from "@/domain/ports/vector_store";
+import { chunkText } from "@/application/services/chunker";
 
-export async function prepareStudyContext(
-  deps: { docs: DocumentStore; ctx: ContextStore; llm: LLMProvider },
-  opts?: { title?: string; maxChars?: number },
-) {
-  const { title = "Study Pack", maxChars = 40_000 } = opts || {};
-  const docs = await deps.docs.list();
-  if (docs.length === 0) throw new Error("No documents to prepare");
+const MAX_TOKENS_PER_REQUEST = 280_000;
+const MAX_ITEMS_PER_REQUEST = 128;
+const CONCURRENCY = 3;
+const approxTokens = (s: string) => Math.ceil(s.length / 4); // груба оцінка
 
-  // Беремо текст (можна урізати, щоб влазив у prompt)
-  const combined = docs.map((d) => `### ${d.name}\n${d.text}`).join("\n\n");
-  const input = combined.slice(0, maxChars);
-
-  const system = [
-    "You are a study assistant. Summarize the provided materials into:",
-    "- A concise overall summary (max 200 words).",
-    "- 5-10 key bullet points.",
-    "- A small glossary of important terms (3-10 terms).",
-    "Output strictly in JSON with fields: summary, keyPoints, glossary[{term,definition}].",
-  ].join("\n");
-
-  const prompt = `Materials:\n${input}\n\nReturn JSON only.`;
-
-  // Використай той самий LLM: або твій FakeLLM, або OpenAI
-  const jsonText = await deps.llm.reply(`${system}\n\n${prompt}`);
-
-  // Парсимо із запасом
-  let parsed: any = {};
-  try {
-    parsed = JSON.parse(extractJson(jsonText));
-  } catch {
-    parsed = { summary: "", keyPoints: [], glossary: [] };
+async function embedBatch(embed: EmbeddingsProvider, texts: string[], retry = 2) {
+  for (let attempt = 0; attempt <= retry; attempt++) {
+    try {
+      return await embed.embed(texts);
+    } catch (e: any) {
+      const is429 = e?.status === 429 || e?.code === "rate_limit_exceeded";
+      const is5xx = e?.status >= 500;
+      if (!(is429 || is5xx) || attempt === retry) throw e;
+      const backoff = 500 * Math.pow(2, attempt);
+      await new Promise((r) => setTimeout(r, backoff));
+    }
   }
-
-  const ctx = {
-    id: crypto.randomUUID(),
-    title,
-    summary: parsed.summary ?? "",
-    keyPoints: Array.isArray(parsed.keyPoints) ? parsed.keyPoints : [],
-    glossary: Array.isArray(parsed.glossary) ? parsed.glossary : [],
-    createdAt: Date.now(),
-  };
-
-  await deps.ctx.setActive(ctx);
-
-  // Готуємо "пресет" для майбутніх чатів
-  const preset =
-    `Use this study context when answering:\n` +
-    `TITLE: ${ctx.title}\n` +
-    `SUMMARY: ${ctx.summary}\n` +
-    `KEY POINTS:\n- ${ctx.keyPoints.join("\n- ")}\n` +
-    (ctx.glossary && ctx.glossary.length
-      ? `GLOSSARY:\n${ctx.glossary.map((g: any) => `- ${g.term}: ${g.definition}`).join("\n")}\n`
-      : "");
-
-  return { id: ctx.id, preset, title: title };
+  return [];
 }
 
-function extractJson(s: string) {
-  // На випадок, якщо модель додасть текст довкола JSON
-  const start = s.indexOf("{");
-  const end = s.lastIndexOf("}");
-  return start >= 0 && end > start ? s.slice(start, end + 1) : s;
+export async function prepareStudyContext(
+  deps: { docs: DocumentStore; embed: EmbeddingsProvider; vectors: VectorStore },
+  opts?: { chunkSize?: number; overlap?: number; clearFirst?: boolean; docIds?: string[] },
+) {
+  const chunkSize = opts?.chunkSize ?? 1200;
+  const overlap = opts?.overlap ?? 120;
+
+  if (opts?.clearFirst && deps.vectors.clear) await deps.vectors.clear();
+
+  let docs = await deps.docs.list();
+  if (opts?.docIds?.length) {
+    const set = new Set(opts.docIds);
+    docs = docs.filter((d) => set.has(d.id));
+  }
+  if (!docs.length) throw new Error("No documents to index");
+
+  let totalChunks = 0;
+
+  for (const d of docs) {
+    const raw = chunkText(d.text, { size: chunkSize, overlap });
+
+    const chunks = raw.filter((t) => t && t.trim().length > 40);
+    if (!chunks.length) continue;
+
+    const batches: { idxs: number[]; texts: string[] }[] = [];
+    let i = 0;
+    while (i < chunks.length) {
+      let count = 0,
+        tokens = 0;
+      const idxs: number[] = [];
+      const texts: string[] = [];
+      while (i < chunks.length && count < MAX_ITEMS_PER_REQUEST) {
+        const t = chunks[i];
+        const est = approxTokens(t);
+        if (count > 0 && tokens + est > MAX_TOKENS_PER_REQUEST) break;
+        idxs.push(i);
+        texts.push(t);
+        tokens += est;
+        count++;
+        i++;
+      }
+      batches.push({ idxs, texts });
+    }
+
+    const limit = pLimit(CONCURRENCY);
+    await Promise.all(
+      batches.map((b, bi) =>
+        limit(async () => {
+          const vecs = await embedBatch(deps.embed, b.texts);
+          for (let k = 0; k < vecs.length; k++) {
+            const idx = b.idxs[k];
+            await deps.vectors.add(`${d.id}::${idx}`, vecs[k], {
+              docId: d.id,
+              name: d.name,
+              idx,
+              text: chunks[idx],
+            });
+          }
+        }),
+      ),
+    );
+    totalChunks += chunks.length;
+  }
+
+  return {
+    docsIndexed: docs.length,
+    chunksIndexed: totalChunks,
+    dim: deps.embed.dim,
+    chunkSize,
+    overlap,
+  };
 }
